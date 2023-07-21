@@ -32,3 +32,10 @@ jobs:
           git add prem.txt
           git commit -m "Add content file"
           git push
+          
+      - name: Trigger Workflow 2
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.WORKFLOW_TOKEN }}
+          repository: premkumar2812/task1
+          event-type: trigger-workflow-2
