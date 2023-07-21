@@ -17,6 +17,24 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Create Dockerfile
+        run: |
+          # Set the name of your text file in the repository
+          TEXT_FILE=prem.txt
+
+          # Generate the Dockerfile content
+          DOCKERFILE_CONTENT=$(cat "$TEXT_FILE" | sed 's/^/RUN echo "/; s/$/"/')
+
+          # Save the Dockerfile content to a file
+          echo "$DOCKERFILE_CONTENT" > Dockerfile
+
+          # Commit and push the generated Dockerfile back to the repository
+          git config user.name "premkumar2812"
+          git config user.email "kpremkumar28120@gmail.com"
+          git add Dockerfile
+          git commit -m "Generated Dockerfile from $TEXT_FILE"
+          git remote set-url origin "https://github.com/premkumar2812/task.git"
+          git push origin main
       - name: Login to docker hub
         uses: docker/login-action@v1
 
