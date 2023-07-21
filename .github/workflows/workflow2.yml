@@ -23,7 +23,6 @@ jobs:
           TEXT_FILE=prem.txt
 
           # Generate the Dockerfile content
-          DOCKERFILE_CONTENT=$(cat "$TEXT_FILE" | sed 's/^/RUN echo "/; s/$/"/')
 
           # Save the Dockerfile content to a file
           echo "# Use a base image" > Dockerfile
@@ -33,8 +32,7 @@ jobs:
           echo "WORKDIR /app" >> Dockerfile
           echo "" >> Dockerfile
           echo "# Copy the application code into the container" >> Dockerfile
-          echo "$DOCKERFILE_CONTENT" >> Dockerfile
-
+          echo "CMD [\"cat\", \"$TEXT_FILE\"]" >> Dockerfile
 
           # Commit and push the generated Dockerfile back to the repository
           git config user.name "premkumar2812"
