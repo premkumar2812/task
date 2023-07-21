@@ -24,19 +24,17 @@ jobs:
 
           # Generate the Dockerfile content
           DOCKERFILE_CONTENT=$(cat "$TEXT_FILE" | sed 's/^/RUN echo "/; s/$/"/')
+
           # Save the Dockerfile content to a file
           echo "# Use a base image" > Dockerfile
-          echo "FROM ubuntu:latest" > Dockerfile
+          echo "FROM ubuntu:latest" >> Dockerfile
           echo "" >> Dockerfile
-          echo "# Set the working directory" > Dockerfile
-          echo "WORKDIR /app" > Dockerfile
-          echo "" > Dockerfile
-          echo "# Copy the application code into the container" > Dockerfile
+          echo "# Set the working directory" >> Dockerfile
+          echo "WORKDIR /app" >> Dockerfile
+          echo "" >> Dockerfile
+          echo "# Copy the application code into the container" >> Dockerfile
+          echo "$DOCKERFILE_CONTENT" >> Dockerfile
 
-
-
-          # Save the Dockerfile content to a file
-          echo "$DOCKERFILE_CONTENT" > Dockerfile
 
           # Commit and push the generated Dockerfile back to the repository
           git config user.name "premkumar2812"
@@ -45,6 +43,10 @@ jobs:
           git commit -m "Generated Dockerfile from $TEXT_FILE"
           git remote set-url origin "https://github.com/premkumar2812/task.git"
           git push origin main
+          
+      - name: View generated Dockerfile
+        run: cat Dockerfile
+
       - name: Login to docker hub
         uses: docker/login-action@v1
 
@@ -53,15 +55,15 @@ jobs:
            password: ${{  secrets.DOCKER_PASSWORD  }}
       - name: Build Docker image
         run: |
-          docker build -t my-docker-image .
-          docker run -d my-docker-image
+          docker build -t my-docker-image1 .
+          docker run -d my-docker-image1
       - name: List images
         run: |
          docker image ls
-         realpath my-docker-image
+         realpath my-docker-image1
       - name: Tag image
         run: |
-         docker tag my-docker-image:latest premkumar2812/task1:newtag 
+         docker tag my-docker-image1:latest premkumar2812/task1:newtag 
 
 
       - name: Push Docker image to Docker Hub
