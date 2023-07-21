@@ -1,0 +1,34 @@
+name: Workflow 1
+
+ 
+
+on:
+  workflow_dispatch:
+  repository_dispatch: 
+              types: [trigger-workflow-1]
+
+
+ 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+ 
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+ 
+
+      - name: Create text file
+        run: echo "Hello, World!" > prem.txt
+        
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "premkumar2812"
+          git config --global user.email "kpremkumar28120@gmail.com"
+          git add prem.txt
+          git commit -m "Add content file"
+          git push
