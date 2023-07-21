@@ -22,16 +22,21 @@ jobs:
 
  
 
-      - name: Create text file
-        run: echo "Hello, World!" > prem.txt
-        
-      - name: Commit and push changes
+      - name: Check if prem.txt exists
         run: |
-          git config --global user.name "premkumar2812"
-          git config --global user.email "kpremkumar28120@gmail.com"
-          git add prem.txt
-          git commit -m "Add content file"
-          git push
+          if [ -f "prem.txt" ]; then
+            echo "prem.txt exists"
+            exit 0
+          else
+            echo "prem.txt does not exist"
+            echo "Hello, World!" > prem.txt
+            git config --global user.name "premkumar2812"
+            git config --global user.email "kpremkumar28120@gmail.com"
+            git add prem.txt
+            git commit -m "Add content to prem.txt"
+            git push
+          fi
+
           
       - name: Trigger Workflow 2
         uses: peter-evans/repository-dispatch@v1
