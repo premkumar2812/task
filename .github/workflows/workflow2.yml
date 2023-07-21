@@ -32,7 +32,8 @@ jobs:
           echo "WORKDIR /app" >> Dockerfile
           echo "" >> Dockerfile
           echo "# Copy the application code into the container" >> Dockerfile
-          echo "CMD [\"cat\", \"$TEXT_FILE\"]" >> Dockerfile
+          CONTENT=$(cat "$TEXT_FILE")
+          echo "CMD [\"echo\", \"$CONTENT\"]" >> Dockerfile
 
           # Commit and push the generated Dockerfile back to the repository
           git config user.name "premkumar2812"
