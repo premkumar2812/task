@@ -37,5 +37,5 @@ jobs:
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.PAT_TOKEN }}
-          repository: premkumar2812/task1
+          repository: premkumar2812/task
           event-type: trigger-workflow-2
