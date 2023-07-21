@@ -1,0 +1,16 @@
+name: Demo Workflow 3
+on:
+  workflow_dispatch
+jobs:
+  run_container:
+    name: Run Docker Container and Cat Text File
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Pull Docker Image
+        run: docker image pull premkumar2812/task1:newtag
+
+      - name: Run Docker container
+        run: docker run premkumar2812/task1:newtag 
