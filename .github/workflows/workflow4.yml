@@ -18,6 +18,6 @@ jobs:
       - name: Trigger Workflow 1
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.WORKFLOW_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           repository: premkumar2812/task1
           event-type: trigger-workflow-1
