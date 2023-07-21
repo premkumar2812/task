@@ -24,6 +24,16 @@ jobs:
 
           # Generate the Dockerfile content
           DOCKERFILE_CONTENT=$(cat "$TEXT_FILE" | sed 's/^/RUN echo "/; s/$/"/')
+          # Save the Dockerfile content to a file
+          echo "# Use a base image" > Dockerfile
+          echo "FROM ubuntu:latest" >> Dockerfile
+          echo "" >> Dockerfile
+          echo "# Set the working directory" >> Dockerfile
+          echo "WORKDIR /app" >> Dockerfile
+          echo "" >> Dockerfile
+          echo "# Copy the application code into the container" >> Dockerfile
+
+
 
           # Save the Dockerfile content to a file
           echo "$DOCKERFILE_CONTENT" > Dockerfile
