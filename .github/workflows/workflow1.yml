@@ -1,44 +1,48 @@
 name: Workflow 1
 
- 
-
 on:
   workflow_dispatch:
-  repository_dispatch: 
-              types: [trigger-workflow-1]
-
-
- 
+    inputs:
+      user_input:
+        description: 'User input for prem.txt content'
+        required: true
+  repository_dispatch:
+    types: [trigger-workflow-1]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
- 
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
- 
-
-      - name: Check if prem.txt exists
+      - name: Check if prem.txt exists and process user input
         run: |
           if [ -f "prem.txt" ]; then
             echo "prem.txt exists"
-            exit 0
+            if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+              echo "${{ github.event.inputs.user_input }}" > prem.txt
+              git config --global user.name "premkumar2812"
+              git config --global user.email "kpremkumar28120@gmail.com"
+              git add prem.txt
+              git commit -m "Update prem.txt"
+              git push
+            fi
           else
             echo "prem.txt does not exist"
-            echo "Hello, World!" > prem.txt
-            git config --global user.name "premkumar2812"
-            git config --global user.email "kpremkumar28120@gmail.com"
-            git add prem.txt
-            git commit -m "Add content to prem.txt"
-            git push
+            if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+              echo "${{ github.event.inputs.user_input }}" > prem.txt
+              git config --global user.name "premkumar2812"
+              git config --global user.email "kpremkumar28120@gmail.com"
+              git add prem.txt
+              git commit -m "Add content to prem.txt"
+              git push
+            fi
           fi
 
-          
       - name: Trigger Workflow 2
+        if: "${{ github.event_name == 'repository_dispatch' }}"
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.PAT_TOKEN }}
