@@ -42,7 +42,6 @@ jobs:
           fi
 
       - name: Trigger Workflow 2
-        if: "${{ github.event_name == 'repository_dispatch' }}"
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.PAT_TOKEN }}
