@@ -68,3 +68,8 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: |
            docker image push premkumar2812/task1:newtag
+      - name: upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact folder
+          path: arti
